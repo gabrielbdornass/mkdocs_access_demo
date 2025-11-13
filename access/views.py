@@ -58,13 +58,13 @@ def serve_page(request, path="index.html"):
 
     # Directory → index.html
     if os.path.isdir(full_path):
-        full_path = os.path.join(full_path, "index.html")
+        full_index_path = os.path.join(full_path, "index.html")
 
     if not os.path.exists(full_path):
         raise Http404(f"Page not found: {path}")
 
     # Read HTML content
-    with open(full_path, "r", encoding="utf-8") as f:
+    with open(full_index_path, "r", encoding="utf-8") as f:
         content = f.read()
 
     # Detect access level from HTML comment
