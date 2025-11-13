@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseForbidden, Http404
 from django.shortcuts import render, redirect
 from access.models import PageAccess
+from django.http import FileResponse
 
 # Directory where your .html pages live
 PAGES_DIR = settings.BASE_DIR / 'pages'
@@ -65,6 +66,19 @@ def serve_page(request, path="index.html"):
     if not os.path.exists(full_path):
         raise Http404(f"Page not found: {path}")
 
+
+    # detecta mime type básico
+    if Path(full_index_path).suffix == ".html":
+        content_type = "text/html"
+    elif Path(full_index_path).suffix == ".css":
+        content_type = "text/css"
+    elif Path(full_index_path).suffix == ".js":
+        content_type = "application/javascript"
+    elif Path(full_index_path).suffix in [".png", ".jpg", ".jpeg", ".gif", ".ico"]:
+        return FileResponse(open(full_index_path, "rb"))
+    else:
+        content_type = "text/plain"
+
     # Read HTML content
     with open(full_index_path, "r", encoding="utf-8") as f:
         content = f.read()
@@ -91,4 +105,4 @@ def serve_page(request, path="index.html"):
                     "<h1>403 Forbidden</h1><p>You don't have permission to access this page.</p>"
                 )
 
-    return HttpResponse(content)
+    return HttpResponse(content, content_type=content_type)

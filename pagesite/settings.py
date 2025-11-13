@@ -66,3 +66,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Path where MkDocs (HTML) pages live
 PAGES_DIR = os.path.join(BASE_DIR, "pages")
+
+MKDOCS_BUILD_DIR = BASE_DIR / "pages"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
