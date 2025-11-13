@@ -59,6 +59,8 @@ def serve_page(request, path="index.html"):
     # Directory → index.html
     if os.path.isdir(full_path):
         full_index_path = os.path.join(full_path, "index.html")
+    else:
+        full_index_path = full_path
 
     if not os.path.exists(full_path):
         raise Http404(f"Page not found: {path}")
