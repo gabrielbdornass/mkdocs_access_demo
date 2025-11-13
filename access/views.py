@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseForbidden, Http404
@@ -6,7 +7,7 @@ from django.shortcuts import render, redirect
 from access.models import PageAccess
 
 # Directory where your .html pages live
-PAGES_DIR = os.path.join(settings.BASE_DIR, "pages")
+PAGES_DIR = settings.BASE_DIR / 'pages'
 
 # -----------------------------------------------------------------------------
 # Login / Logout Views
